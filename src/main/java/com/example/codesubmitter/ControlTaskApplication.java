@@ -13,11 +13,8 @@ public class ControlTaskApplication extends BorderPane {
     private TextField firstNameField;
     private TextField lastNameField;
     private ComboBox<String> termComboBox;
-    private IntegrationWithIntelliJ integrationWithIntelliJ;
-
 
     public ControlTaskApplication(Stage primaryStage) {
-        integrationWithIntelliJ = new IntegrationWithIntelliJ();
         initializeUI();
     }
 
@@ -69,8 +66,7 @@ public class ControlTaskApplication extends BorderPane {
             submitButton.setDisable(false);
 
             // Pozovite drugu klasu i prosledite ime i prezime
-            IntegrationWithIntelliJ integrationWithIntelliJ = new IntegrationWithIntelliJ();
-            integrationWithIntelliJ.startIntelliJIDEA(firstName, lastName);
+            IntegrationWithIntelliJ.getInstance().startIntelliJIDEA(firstName, lastName);
         } else {
             // Ako nisu uneti, prikažite upozorenje
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -90,7 +86,7 @@ public class ControlTaskApplication extends BorderPane {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String selectedTerm = termComboBox.getValue();
-        integrationWithIntelliJ.deleteTempProjectDir(integrationWithIntelliJ.getDir());
+        IntegrationWithIntelliJ.getInstance().deleteTempProjectDir(IntegrationWithIntelliJ.getInstance().getDir());
 
         // Ovde možete dodati kod za pakovanje i slanje podataka na Google Drive.
         // Takođe, možete ponovo onemogućiti dugme za predaju ako je potrebno.

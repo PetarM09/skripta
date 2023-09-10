@@ -13,8 +13,15 @@ import java.nio.file.StandardCopyOption;
 
 
 public class IntegrationWithIntelliJ {
+    private static IntegrationWithIntelliJ instance = null;
     private File tempProjectDir;
     private File desktopDir;
+
+    public static IntegrationWithIntelliJ getInstance(){
+        if(instance == null)
+            instance = new IntegrationWithIntelliJ();
+        return instance;
+    }
     public void startIntelliJIDEA(String firstName, String lastName) {
         try {
             desktopDir = new File("");
@@ -63,11 +70,6 @@ public class IntegrationWithIntelliJ {
     }
 
     public void deleteTempProjectDir(File dir) {
-        try {
-            ZipUtility.zipFolders(tempProjectDir, desktopDir.getAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             if (files != null) {
@@ -77,6 +79,15 @@ public class IntegrationWithIntelliJ {
             }
         }
         dir.delete();
+    }
+
+    public void zipThenDelete(File dir){
+        try {
+            ZipUtility.zipFolders(dir, desktopDir.getAbsolutePath() + File.separator + "zipovan_folder.zip");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        deleteTempProjectDir(dir);
     }
 
     private static void downloadPDF(String pdfUrl, File destinationDir) throws IOException {
