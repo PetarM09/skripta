@@ -1,11 +1,11 @@
 package com.example.codesubmitter;
 
-import javafx.beans.binding.StringExpression;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class ControlTaskApplication extends BorderPane {
     private Button startButton;
@@ -13,8 +13,11 @@ public class ControlTaskApplication extends BorderPane {
     private TextField firstNameField;
     private TextField lastNameField;
     private ComboBox<String> termComboBox;
+    private IntegrationWithIntelliJ integrationWithIntelliJ;
+
 
     public ControlTaskApplication(Stage primaryStage) {
+        integrationWithIntelliJ = new IntegrationWithIntelliJ();
         initializeUI();
     }
 
@@ -87,6 +90,7 @@ public class ControlTaskApplication extends BorderPane {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String selectedTerm = termComboBox.getValue();
+        integrationWithIntelliJ.deleteTempProjectDir(integrationWithIntelliJ.getDir());
 
         // Ovde možete dodati kod za pakovanje i slanje podataka na Google Drive.
         // Takođe, možete ponovo onemogućiti dugme za predaju ako je potrebno.

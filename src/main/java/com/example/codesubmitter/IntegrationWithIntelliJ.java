@@ -1,10 +1,5 @@
 package com.example.codesubmitter;
 
-import javafx.scene.image.WritableImage;
-import javafx.scene.robot.Robot;
-import javafx.stage.Stage;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,14 +13,18 @@ import java.nio.file.StandardCopyOption;
 
 
 public class IntegrationWithIntelliJ {
+    private File tempProjectDir;
+    private File desktopDir;
     public void startIntelliJIDEA(String firstName, String lastName) {
         try {
+            desktopDir = new File("");
+            tempProjectDir = new File("");
             // Putanja do izvršne datoteke IntelliJ IDEA na učenikovom računaru
             String intelliJPath = "/Applications/IntelliJ IDEA.app/Contents/MacOS/idea";
 
             // Kreirajte direktorijum sa imenom i prezimenom učenika na Desktopu
-            File desktopDir = new File(System.getProperty("user.home"), "Desktop");
-            File tempProjectDir = createTempProjectDir(desktopDir, firstName, lastName);
+            desktopDir = new File(System.getProperty("user.home"), "Desktop");
+            tempProjectDir = createTempProjectDir(desktopDir, firstName, lastName);
 
             // Preuzmite PDF fajl i sačuvajte ga u isti direktorijum kao projekat
             String pdfUrl = "https://drive.google.com/uc?id=1Eu2U2r9OOMu-3vt4HQxh3OEr_EFkQgW6"; // Zamijenite VAŠ_ID_FAJLA sa stvarnim ID-em fajla
@@ -63,7 +62,12 @@ public class IntegrationWithIntelliJ {
         return userDir;
     }
 
-    private static void deleteTempProjectDir(File dir) {
+    public void deleteTempProjectDir(File dir) {
+        try {
+            ZipUtility.zipFolders(tempProjectDir, desktopDir.getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             if (files != null) {
@@ -89,5 +93,7 @@ public class IntegrationWithIntelliJ {
             System.err.println("Greška prilikom preuzimanja PDF fajla.");
         }
     }
-
+    public File getDir(){
+        return tempProjectDir;
+    }
 }

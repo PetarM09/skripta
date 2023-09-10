@@ -1,14 +1,7 @@
 package com.example.codesubmitter;
 
-import javafx.application.Platform;
-import javafx.scene.image.WritableImage;
-import javafx.scene.robot.Robot;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-
-
 public class ActivityMonitor {
-    private Robot robot;
+    /*private Robot robot;
     private String currentApp;
     private User32 user32;
     private User32.HOOK hook;
@@ -73,6 +66,6 @@ public class ActivityMonitor {
             e.printStackTrace();
             System.err.println("Greška prilikom snimanja screenshot-a.");
         }
-        */
-    }
+
+    }*/
 }
